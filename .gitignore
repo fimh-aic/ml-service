@@ -7,3 +7,6 @@ __pycache__/
 
 # ML Model
 app/ml/*.h5
+
+# MacOS
+.DS_Store
