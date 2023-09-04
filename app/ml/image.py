@@ -6,9 +6,9 @@ import tensorflow as tf
 from tensorflow.keras.preprocessing import image
 
 
-model = tf.keras.saving.load_model(
-    'app/ml/similarity_learning.h5'
-)
+model = tf.keras.models.load_model('app/ml/similarity_learning.h5',custom_objects={'KerasLayer':hub.KerasLayer})
+
+
 class_labels = ['apple',
  'bean sprouts',
  'chicken meat',

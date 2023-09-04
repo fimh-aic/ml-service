@@ -14,7 +14,6 @@ app = FastAPI()
 model_name_1 = "Food Image Recognition"
 model_name_2 = "Receipt Recommendation"
 version = "v1.0.0"
-key = os.getenv("API_KEY")
 csv_path = "app/data/kandungan_buah_sayur.csv"
 df = pd.read_csv(csv_path)
 
@@ -31,14 +30,10 @@ async def model_info():
     }
 
 @app.post('/recognize')
-async def recognize_image(image: UploadFile, api_key: str):
+async def recognize_image(image: UploadFile):
     """ Recognize the uploaded image """
-    if not api_key or not image:
-        raise HTTPException(status_code=400, detail="Please provide an API key and an image")
     if "image" not in image.content_type:
         raise HTTPException(status_code=400, detail="File must be an image")
-    if api_key != key:
-        raise HTTPException(status_code=401, detail="Invalid API key")
     img = Image.open(image.file)
     predicted_class, confidence = predictImage(img)
     filtered_df = df[df['nama'].str.lower() == predicted_class]
@@ -54,12 +49,10 @@ async def recognize_image(image: UploadFile, api_key: str):
     }
 
 @app.post('/recommendation')
-async def recomendation_(query: str, api_key: str, limit: Union[None, int] = None):
+async def recomendation_(query: str, limit: Union[None, int] = None):
     """ Recognize the uploaded image """
-    if not query or not api_key:
-        raise HTTPException(status_code=400, detail="Please provide an an API key and keyword to recommend")
-    if api_key != key:
-        raise HTTPException(status_code=401, detail="Invalid API key")
+    if not query:
+        raise HTTPException(status_code=400, detail="Please provide an keyword to recommend")
     if not limit:
         limit = 10
     sanitized_query = case_folding(query)
