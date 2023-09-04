@@ -9,7 +9,7 @@ env:
   REGISTRY: ${{ secrets.REGISTRY_URL }}
   IMAGE_NAME: ml-service-image
   PROJECT_ID: ${{ secrets.PROJECT_ID }}
-  SERVICE_NAME: ml-service-image
+  SERVICE_NAME: ml-service
   REGION: asia-southeast2
 
 jobs:
