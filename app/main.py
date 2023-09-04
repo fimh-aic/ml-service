@@ -1,5 +1,5 @@
 from app.ml.image import predictImage
-from app.ml.receipt import recommend
+from app.ml.receipt import recommend, case_folding
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from PIL import Image
 import os
