@@ -14,8 +14,6 @@ app = FastAPI()
 model_name_1 = "Food Image Recognition"
 model_name_2 = "Receipt Recommendation"
 version = "v1.0.0"
-csv_path = "app/data/kandungan_buah_sayur.csv"
-df = pd.read_csv(csv_path)
 
 @app.get("/")
 def read_root():
@@ -36,15 +34,10 @@ async def recognize_image(image: UploadFile):
         raise HTTPException(status_code=400, detail="File must be an image")
     img = Image.open(image.file)
     predicted_class, confidence = predictImage(img)
-    filtered_df = df[df['nama'].str.lower() == predicted_class]
-    if filtered_df.empty:
-        result_data = {}
-    else:
-        result_data = filtered_df.iloc[0].to_dict()
     return {
         "name": model_name_1,
         "version": version,
-        "result": result_data,
+        "result": predicted_class,
         "confidence": str(confidence)
     }
 
