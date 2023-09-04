@@ -3,7 +3,9 @@ import os
 from PIL import Image
 import numpy as np
 import tensorflow as tf
+import tensorflow_hub as hub
 from tensorflow.keras.preprocessing import image
+
 
 
 model = tf.keras.models.load_model('app/ml/similarity_learning.h5',custom_objects={'KerasLayer':hub.KerasLayer})
