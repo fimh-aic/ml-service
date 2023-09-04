@@ -20,6 +20,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # Download model from Google Storage
+      - name: Download File
+        run: |
+          curl -L -o app/ml/ml_model.h5 ${{ secrets.ML_MODEL_URL }}
+          # You can replace "curl" with "wget" if you prefer to use wget.
+
       # Build and tag the Docker image
       - name: Build Docker image
         run: docker build -t ${{ env.IMAGE_NAME }}:${{ github.sha }} .
